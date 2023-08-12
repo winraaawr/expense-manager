@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,10 +32,39 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/users', [ProfileController::class, 'index', RoleController::class, 'getRoles'],)
+    ->middleware(['auth', 'verified'])->name('users');
+
+//Roles Route
+Route::middleware('auth')->group(function(){
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles');
+    Route::get('/*', [RoleController::class, 'show'])->name('roles.show');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::put('/profile/{profile}', [ProfileController::class, 'updateAdmin'])->name('profile.update');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.edit');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/{role}', [ProfileController::class, 'adminDestroy'])->name('profile.admindestroy');
+});
+
+
+//Expenses Route
+Route::middleware('auth')->group(function(){
+    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses');
+});
+
+//Categories Route
+Route::middleware('auth')->group(function(){
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+});
+
+
+require __DIR__ . '/auth.php';

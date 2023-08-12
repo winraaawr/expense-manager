@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -37,8 +38,12 @@ class HandleInertiaRequests extends Middleware
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
+                    
                 ]);
             },
+            'flash' => [
+                'message' => session(key: 'message')
+            ],
         ]);
     }
 }
