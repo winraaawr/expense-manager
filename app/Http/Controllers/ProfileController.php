@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateAdminRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserAdminRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,19 +14,35 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
 use App\Models\Role;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         $users = User::with('role')->get();
         $roles = Role::all();
         return Inertia::render('Users', [
             "users" => $users,
-            "roles" =>$roles,
+            "roles" => $roles,
         ]);
     }
+
+    public function store(StoreUserRequest $request)
+    {
+        $request->validated();
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role_id' => $request->role_id,
+            'password' => Hash::make('password'),
+        ]);
+
+        return redirect()->route(route: 'users')->with('message', 'A user was created successfully.');
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -50,13 +67,14 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return Redirect::route('profile.edit')->with('message', 'User profile updated successfully');
     }
-    
 
-    public function updateAdmin(User $user, Request $request)
+
+    public function updateAdmin(User $user, UpdateUserAdminRequest $request)
     {
-       // skippped continue later
+        $user->update($request->validated());
+        return redirect()->route(route: 'users')->with('message', 'A user was updated successfully.');
     }
 
     /**
@@ -83,7 +101,7 @@ class ProfileController extends Controller
     // continue later
     public function adminDestroy(User $user)
     {
-        // $user->delete();
-        return redirect()->route(route: 'users')->with('message', 'A user was deleted successfully.');
+        $user->delete();
+        return redirect()->route(route: 'users')->with('message', 'A user was successfully deleted.');
     }
 }

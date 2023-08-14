@@ -6,7 +6,8 @@
     >
         Add User
     </button>
-    <Modal size="lg" v-if="isShownAddUser" @close="closeAddUser">
+
+    <Modal class="absolute" size="lg" v-if="isShownAddUser" @close="closeAddUser">
         <template #header>
             <div class="flex items-center text-lg">Add Role</div>
         </template>
@@ -75,7 +76,7 @@
                 </button>
                 <button
                     :disabled="form.processing"
-                    @click="submitRole()"
+                    @click="submitUser()"
                     type="button"
                     class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-blue-800"
                 >
@@ -112,12 +113,15 @@ const form = useForm({
     role_id: '',
 });
 
-function submitRole() {
-    form.post(route("roles.store"), {
+function submitUser() {
+    form.post(route("users.store"), {
         onSuccess: () => {
             form.reset();
             closeAddUser();
         },
+        onError: (error) => {
+            console.log(error);
+        }
     });
 }
 </script>

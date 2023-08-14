@@ -1,7 +1,6 @@
 <template>
     <Head title="Expense Categories" />
 
-    <AuthenticatedLayout>
         <div class="py-16 sm:py-14">
             <div class="max-w-7xl mx-auto sm:px-4 lg:px-4">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -23,14 +22,12 @@
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
 </template>
 
 <script setup>
 import { defineProps } from 'vue'
 import Flash from "@/Components/Flash.vue"
 import { Head } from '@inertiajs/vue3';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CategoriesTable from '@/Components/Categories/CategoriesTable.vue';
 import AddCategory from '@/Components/Categories/AddCategory.vue';
 
@@ -41,6 +38,10 @@ const props = defineProps({
 
 </script>
 
-<style lang="scss" scoped>
+<script>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
-</style>
+export default {
+    layout: AuthenticatedLayout,
+};
+</script>

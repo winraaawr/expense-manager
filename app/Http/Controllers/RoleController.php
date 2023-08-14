@@ -39,7 +39,7 @@ class RoleController extends Controller
     {
         $role->delete();
 
-        return redirect()->route(route: 'roles')->with('message', 'A role was deleted successfully.');
+        return redirect()->route(route: 'roles')->with('message', 'A role was deleted successfully.' . $role);
     }
 
     

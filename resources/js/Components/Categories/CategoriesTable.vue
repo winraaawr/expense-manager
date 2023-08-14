@@ -17,7 +17,12 @@
                     <td scope="col" class="px-6 py-4">
                         {{ category.description  }}
                     </td>
-                    <td class="px-6 py-4">{{ category.created_at }}</td>
+                    <td class="px-6 py-4">{{ formatDate(category.created_at) }}</td>
+                </tr>
+                <tr v-if="categories.length < 1" class="">
+                    <th colspan="4" class="italic px-6 py-16 font-medium text-gray-800/50 whitespace-nowrap dark:text-white text-center">
+                        No expense category found.
+                    </th>
                 </tr>
             </tbody>
         </table>
@@ -77,6 +82,7 @@ import { ref, defineProps } from "vue";
 import { Modal } from "flowbite-vue";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
+import { dateFormatter } from '@/utilities.js'
 
 const props = defineProps({
     categories: Array,
@@ -127,5 +133,9 @@ function deleteUser(id) {
             },
         });
     }
+}
+
+function formatDate(date){
+    return dateFormatter(date);
 }
 </script>

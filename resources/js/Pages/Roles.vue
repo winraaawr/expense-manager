@@ -11,10 +11,17 @@ const props = defineProps({
 });
 </script>
 
+<script>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+
+export default {
+    layout: AuthenticatedLayout,
+};
+</script>
+
 <template>
     <Head title="Roles" />
 
-    <AuthenticatedLayout>
         <div class="py-16 sm:py-14">
             <div class="max-w-7xl mx-auto sm:px-4 lg:px-4">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -38,5 +45,4 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
 </template>

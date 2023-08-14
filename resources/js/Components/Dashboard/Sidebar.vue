@@ -98,7 +98,7 @@ onMounted(() => {
     initFlowbite();
 })
 
-const role = ref(null);
+const role = ref('User Role');
 
 const page = usePage();
 const user = page.props.auth.user

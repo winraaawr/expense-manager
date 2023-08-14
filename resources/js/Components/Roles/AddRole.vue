@@ -6,7 +6,7 @@
     >
         Add Role
     </button>
-    <Modal size="lg" v-if="isShownAddRole" @close="closeAddRole">
+    <Modal class="absolute" size="lg" v-if="isShownAddRole" @close="closeAddRole">
         <template #header>
             <div class="flex items-center text-lg">Add Role</div>
         </template>

@@ -28,12 +28,16 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ExpenseController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/users', [ProfileController::class, 'index', RoleController::class, 'getRoles'],)
-    ->middleware(['auth', 'verified'])->name('users');
+
+//Users Route
+Route::middleware('auth')->group(function(){
+    Route::get('/users', [ProfileController::class, 'index', RoleController::class, 'getRoles'],)->name('users');
+    Route::post('/users', [ProfileController::class, 'store'])->name('users.store');
+    Route::put('/profile/{user}', [ProfileController::class, 'updateAdmin'])->name('users.update');
+    Route::delete('/profile/{user}', [ProfileController::class, 'adminDestroy'])->name('users.destroy');
+});
 
 //Roles Route
 Route::middleware('auth')->group(function(){
@@ -46,16 +50,18 @@ Route::middleware('auth')->group(function(){
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::put('/profile/{profile}', [ProfileController::class, 'updateAdmin'])->name('profile.update');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::delete('/profile/{role}', [ProfileController::class, 'adminDestroy'])->name('profile.admindestroy');
+    
 });
 
 
 //Expenses Route
 Route::middleware('auth')->group(function(){
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses');
+    Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+    Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
 });
 
 //Categories Route

@@ -6,7 +6,7 @@
     >
         Add Category
     </button>
-    <Modal size="lg" v-if="isShownAddCategory" @close="closeAddCategory">
+    <Modal class="absolute" size="lg" v-if="isShownAddCategory" @close="closeAddCategory">
         <template #header>
             <div class="flex items-center text-lg">Add Role</div>
         </template>

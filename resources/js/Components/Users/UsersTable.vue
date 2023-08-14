@@ -21,7 +21,10 @@
                     <td scope="col" class="px-6 py-4">
                         {{ user.role.role_name }}
                     </td>
-                    <td class="px-6 py-4">{{ user.created_at }}</td>
+                    <td class="px-6 py-4">{{ formatDate(user.created_at) }}</td>
+                </tr>
+                <tr v-if="users.length < 1">
+                    <th colspan="4" class="italic px-6 py-16 font-medium text-gray-800/50 whitespace-nowrap dark:text-white text-center">No user account found.</th>
                 </tr>
             </tbody>
         </table>
@@ -53,8 +56,6 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3">
                     <label for="role">Role</label>
-                    <!-- <input type="text" id="description" name="description" class="col-span-2 px-2 py-1 rounded-md"
-                        v-model="form.email" /> -->
                     <select id="role" name="role" class="col-span-2 px-2 py-1 rounded-md" v-model="form.role_id">
                         <option v-for="role in roles" :value="role.id">{{ role.role_name }}</option>
                     </select>
@@ -68,7 +69,7 @@
         <template #footer>
             <div class="flex flex-row justify-between">
                 <div class="flex items-center">
-                    <button v-if="form.role_id != 1" @click="deleteUser(form.id)" type="button"
+                    <button v-if="currentID != 1" @click="deleteUser(form.id)" type="button"
                         class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-blue-800">
                         Delete
                     </button>
@@ -93,6 +94,8 @@ import { ref, defineProps } from "vue";
 import { Modal } from "flowbite-vue";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
+import { dateFormatter } from "@/utilities";
+
 
 const isShownModalUser = ref(false);
 
@@ -101,7 +104,10 @@ const props = defineProps({
     roles: Array,
 })
 
+const currentID = ref(null);
+
 const form = useForm({
+    id: "",
     name: "",
     email: "",
     role_id: "",
@@ -109,10 +115,12 @@ const form = useForm({
 
 function showUpdateUser(data) {
     isShownModalUser.value = true;
-    form.id = data.id
-    form.name = data.name
-    form.email = data.email
-    form.role_id = data.role_id
+    currentID.value = data.role_id;
+    form.id = data.id;
+    form.name = data.name;
+    form.email = data.email;
+    form.role_id = data.role_id;
+    console.log(data.id);
 }
 
 function closeUpdateUser() {
@@ -122,7 +130,7 @@ function closeUpdateUser() {
 }
 
 function submitUpdateUser(){
-    form.put(route("profile.update", form.id), {
+    form.put(route("users.update", form.id), {
         onSuccess: () => {
             form.reset();
             closeUpdateUser();
@@ -137,7 +145,7 @@ const deleteMsg = "Are you sure you want to delete this user?";
 
 function deleteUser(id) {
     if (confirm(deleteMsg)) {
-        router.delete(route("profile.admindestroy", id), {
+        router.delete(route("users.destroy", id), {
             onSuccess: () => {
                 closeUpdateUser();
             },
@@ -148,5 +156,7 @@ function deleteUser(id) {
     }
 }
 
-console.log(props.roles);
+function formatDate(date){
+    return dateFormatter(date);
+}
 </script>

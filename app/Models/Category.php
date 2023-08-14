@@ -13,4 +13,9 @@ class Category extends Model
         'category_name',
         'description',
     ];
+
+    public function expenses()
+    {
+        return $this->hasMany(related: Expense::class);
+    }
 }

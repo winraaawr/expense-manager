@@ -28,7 +28,10 @@
                     <td scope="col" class="px-6 py-4">
                         {{ role.description }}
                     </td>
-                    <td class="px-6 py-4">{{ role.created_at }}</td>
+                    <td class="px-6 py-4">{{ formatDate(role.created_at) }}</td>
+                </tr>
+                <tr v-if="roles.length < 1">
+                    <th colspan="4" class="italic px-6 py-16 font-medium text-gray-800/50 whitespace-nowrap dark:text-white text-center">No role found.</th>
                 </tr>
             </tbody>
         </table>
@@ -118,6 +121,7 @@ import { ref, defineProps } from "vue";
 import { Modal } from "flowbite-vue";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
+import { dateFormatter } from "@/utilities";
 
 const isShownModalRole = ref(false);
 
@@ -167,5 +171,9 @@ function deleteRole(id) {
             },
         });
     }
+}
+
+function formatDate(date){
+    return dateFormatter(date);
 }
 </script>

@@ -6,6 +6,7 @@ import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
 
@@ -41,6 +42,7 @@ const updatePassword = () => {
             <p class="mt-1 text-sm text-gray-600">
                 Ensure your account is using a long, random password to stay secure.
             </p>
+
         </header>
 
         <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
