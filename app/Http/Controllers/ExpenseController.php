@@ -14,8 +14,14 @@ use Inertia\Inertia;
 class ExpenseController extends Controller
 {
     public function index(){
-        $user_id = Auth::id();
-        $expenses = Expense::where('user_id', $user_id)->with('category')->get();
+        $user = Auth::user();
+
+        if($user->role_id === 1){
+            $expenses = Expense::with('category', 'user')->get();
+        }else{
+            $expenses = Expense::where('user_id', $user->id)->with('category', 'user')->get();
+        }
+        
         $categories = Category::all();
 
         return Inertia::render('Expenses', [
@@ -25,12 +31,21 @@ class ExpenseController extends Controller
     }
 
     public function show(){
-        $user_id = Auth::id();
-        $expenses = DB::table('categories')
-                        ->select('category_name', DB::raw('COALESCE(SUM(amount)) as total_amount'))
-                        ->groupBy('category_name', 'category_id')
-                        ->leftJoin('expenses', 'expenses.category_id', '=', DB::raw('categories.id AND user_id ='.$user_id) )
-                        ->get();
+        $user = Auth::user();
+        if($user->role_id === 1){
+            $expenses = DB::table('categories')
+            ->select('category_name', DB::raw('COALESCE(SUM(amount)) as total_amount'))
+            ->groupBy('category_name', 'category_id')
+            ->leftJoin('expenses', 'expenses.category_id', '=', 'categories.id')
+            ->get();
+        }else{
+            $expenses = DB::table('categories')
+            ->select('category_name', DB::raw('COALESCE(SUM(amount)) as total_amount'))
+            ->groupBy('category_name', 'category_id')
+            ->leftJoin('expenses', 'expenses.category_id', '=', DB::raw('categories.id AND user_id ='.$user->id) )
+            ->get();
+        }
+        
 
         // $expense = DB::table('categories')->select('category_id, category_name')
 

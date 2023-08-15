@@ -9,7 +9,7 @@
 
     <Modal class="absolute" size="lg" v-if="isShownAddUser" @close="closeAddUser">
         <template #header>
-            <div class="flex items-center text-lg">Add Role</div>
+            <div class="flex items-center text-lg">Add New User</div>
         </template>
         <template #body>
             <form>

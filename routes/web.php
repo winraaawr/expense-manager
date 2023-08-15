@@ -33,28 +33,27 @@ Route::get('/dashboard', [ExpenseController::class, 'show'])->middleware(['auth'
 
 //Users Route
 Route::middleware('auth')->group(function(){
-    Route::get('/users', [ProfileController::class, 'index', RoleController::class, 'getRoles'],)->name('users');
+    Route::get('/users', [ProfileController::class, 'index', RoleController::class, 'getRoles'],)->middleware('is_admin')->name('users');
     Route::post('/users', [ProfileController::class, 'store'])->name('users.store');
     Route::put('/profile/{user}', [ProfileController::class, 'updateAdmin'])->name('users.update');
     Route::delete('/profile/{user}', [ProfileController::class, 'adminDestroy'])->name('users.destroy');
 });
 
+//Profile
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); 
+});
+
 //Roles Route
 Route::middleware('auth')->group(function(){
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles');
+    Route::get('/roles', [RoleController::class, 'index'])->middleware('is_admin')->name('roles');
     Route::get('/*', [RoleController::class, 'show'])->name('roles.show');
     Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
     Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
     Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 });
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-});
-
 
 //Expenses Route
 Route::middleware('auth')->group(function(){
@@ -66,10 +65,10 @@ Route::middleware('auth')->group(function(){
 
 //Categories Route
 Route::middleware('auth')->group(function(){
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/categories', [CategoryController::class, 'index'])->middleware('is_admin')->name('categories');
+    Route::post('/categories', [CategoryController::class, 'store'])->middleware('is_admin')->name('categories.store');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->middleware('is_admin')->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->middleware('is_admin')->name('categories.destroy');
 });
 
 

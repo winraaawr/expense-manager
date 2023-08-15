@@ -8,7 +8,7 @@
     </button>
     <Modal class="absolute" size="lg" v-if="isShownAddCategory" @close="closeAddCategory">
         <template #header>
-            <div class="flex items-center text-lg">Add Role</div>
+            <div class="flex items-center text-lg">Add New Category</div>
         </template>
         <template #body>
             <form>

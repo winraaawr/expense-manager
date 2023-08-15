@@ -30,7 +30,7 @@
 
     <Modal v-if="isShownModalCategory" size="lg" @close="closeUpdateCategory">
         <template #header>
-            <div class="flex items-center text-lg">Update User</div>
+            <div class="flex items-center text-lg">Update Category</div>
         </template>
         <template #body>
             <form>

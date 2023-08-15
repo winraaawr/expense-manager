@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 w-full py-16">
+    <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 w-full py-6">
         <!-- List -->
         <div class="col-span-1 relative overflow-x-auto sm:rounded-lg">
             <table
@@ -27,7 +27,7 @@
                         <td colspan="2" class="px-6 py-16 italic text-center"> No expense record found.</td>
                     </tr>
                 </tbody>
-                <tr v-if="total != 0" class="bg-gray-200">
+                <tr class="bg-gray-200">
                     <td class="px-6 py-4 font-bold">Total Expenses: </td>
                     <td class="px-6 py-4">${{ formatNumber(total) }}</td>
                 </tr>
@@ -35,8 +35,8 @@
         </div>
         <!-- Pie Chart -->
         <div class="col-span-1">
-            <Pie v-if="labels.length != 0 && data.length !=0" :data="chartData" :options="chartOptions" />
-            <span v-else class="text-sm italic text-gray-800/50 flex flex-col items-center justify-center h-full w-full border-2 rounded-lg min-h-[250px]">No expense record to show.</span>
+            <Pie v-if="total != 0" :data="chartData" :options="chartOptions" />
+            <span v-else class="text-sm italic text-gray-800/50 flex flex-col items-center justify-center h-full w-full border-2 rounded-lg">No expense record to show.</span>
         </div>
     </div>
 </template>
@@ -57,16 +57,18 @@ function formatNumber(value){
     return monetaryFormat(value);
 }
 
-let labels = [], data = [], total = 0;
+let labels = [], data = []
 
 function extractData() {
+    let total = 0;
     for (let i = 0; i < props.expenses.length; i++) {
         labels.push(props.expenses[i].category_name);
         data.push(Math.round(props.expenses[i].total_amount*100)/100);
         total = total + props.expenses[i].total_amount;
     }
+    return total;
 }
-extractData()
+const total = extractData();
 
 const chartData = ref({
     labels: labels,
@@ -92,6 +94,13 @@ const chartData = ref({
 const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    plugins: {
+        emptyDoughnut: {
+        color: 'rgba(255, 128, 0, 0.5)',
+        width: 2,
+        radiusDecrease: 20
+      }
+    }
 };
 
 </script>

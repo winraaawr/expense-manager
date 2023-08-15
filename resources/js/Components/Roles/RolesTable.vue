@@ -43,14 +43,15 @@
         </template>
         <template #body>
             <form>
-                <div class="grid grid-cols-1 sm:gap-2 sm:grid-cols-3 mb-2">
+                <div class="grid grid-cols-1 sm:grid-cols-3 mb-2">
                     <label for="role">Display Name</label>
                     <input
                         type="text"
                         id="role"
                         name="role"
-                        class="col-span-2 px-2 py-1 rounded-md"
+                        class="col-span-2 px-2 py-1 rounded-md disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-800/50"
                         v-model="form.role_name"
+                        :disabled="form.id === 1"
                     />
                     <div v-if="form.errors.role_name" class="col-span-1"></div>
                     <div
@@ -66,8 +67,9 @@
                         type="text"
                         id="description"
                         name="description"
-                        class="col-span-2 px-2 py-1 rounded-md"
+                        class="col-span-2 px-2 py-1 rounded-md disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-800/50"
                         v-model="form.description"
+                        :disabled="form.id === 1"
                     />
                     <div
                         v-if="form.errors.description"
@@ -103,6 +105,7 @@
                         Cancel
                     </button>
                     <button
+                        v-if="form.id != 1"
                         @click="submitUpdateRole"
                         :disabled="form.processing"
                         type="button"

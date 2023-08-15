@@ -8,6 +8,7 @@
             >
                 <tr>
                     <th scope="col" class="px-6 py-3">Expense Category</th>
+                    <th v-if="user.role_id == 1" scope="col" class="px-6 py-3">User</th>
                     <th scope="col" class="px-6 py-3">Amount</th>
                     <th scope="col" class="px-6 py-3">Entry Date</th>
                     <th scope="col" class="px-6 py-3">Created at</th>
@@ -26,6 +27,9 @@
                     >
                         {{ expense.category.category_name }}
                     </th>
+                    <td v-if="user.role_id == 1" scope="col" class="px-6 py-4">
+                        {{ expense.user.name }}
+                    </td>
                     <td scope="col" class="px-6 py-4">
                         ${{ formatNumber(expense.amount) }}
                     </td>
@@ -45,10 +49,14 @@
 
     <Modal v-if="isShownModalRole" size="lg" @close="closeUpdateExpense">
         <template #header>
-            <div class="flex items-center text-lg">Update Role</div>
+            <div class="flex items-center text-lg">Update Expenses</div>
         </template>
         <template #body>
             <form>
+                <div v-if="user.role_id == 1" class="grid grid-cols-1 sm:grid-cols-3 mb-3">
+                    <label for="amount">User</label>
+                    <span class="text-gray-800/50">{{ belongsTo }}</span>
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 mb-2">
                     <label for="category">Category</label>
                     <select
@@ -158,10 +166,14 @@ import { dateFormatter, justNumbers, monetaryFormat } from "@/utilities.js"
 const page = usePage();
 const user = page.props.auth.user;
 const isShownModalRole = ref(false);
+const belongsTo = ref('');
+
 const props = defineProps({
     expenses: Array,
     categories: Array,
 });
+
+console.log(props.expenses);
 
 const form = useForm({
     id: "",
@@ -172,6 +184,7 @@ const form = useForm({
 });
 
 function showUpdateExpense(data) {
+    belongsTo.value = data.user.name;
     form.id = data.id;
     form.amount = data.amount;
     form.category_id = data.category_id;

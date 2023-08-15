@@ -45,7 +45,7 @@
                 <li>
                     <Link :href="route('dashboard')"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <span class="ml-3">Dashboard</span>
+                        <font-awesome-icon icon="fa-solid fa-chart-pie" class="ml-3" /><span class="ml-3">Dashboard</span>
                     </Link>
                 </li>
                 <li v-if="$page.props.auth.user.role_id === 1">
@@ -57,11 +57,11 @@
 
                         <li><Link :href="route('roles')"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <span class="ml-8">Roles</span>
+                                <font-awesome-icon icon="fa-solid fa-user-gear" class="ml-3" /><span class="ml-3">Roles</span>
                             </Link></li>
                         <li><Link :href="route('users')"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <span class="ml-8">Users</span>
+                                <font-awesome-icon icon="fa-solid fa-users" class="ml-3" /><span class="ml-3">Users</span>
                         </Link></li>
                     </ul>
                 </li>
@@ -74,11 +74,11 @@
 
                         <li v-if="$page.props.auth.user.role_id === 1"><Link :href="route('categories')"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <span class="ml-8">Expenses Categories</span>
+                                <font-awesome-icon icon="fa-solid fa-comment-dollar" class="ml-3" /><span class="ml-3">Expenses Categories</span>
                         </Link></li>
                         <li><Link :href="route('expenses')"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <span class="ml-8">Expenses</span>
+                                <font-awesome-icon icon="fa-solid fa-money-check-dollar" class="ml-3" /><span class="ml-3">Expenses</span>
                         </Link></li>
                     </ul>
                 </li>

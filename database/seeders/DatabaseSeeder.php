@@ -52,5 +52,9 @@ class DatabaseSeeder extends Seeder
             'category_name' => 'Clothing',
             'description' => 'A daily basic necessity.',
         ]);
+        \App\Models\Category::factory()->create([
+            'category_name' => 'Shelter',
+            'description' => 'A daily basic necessity.',
+        ]);
     }
 }
