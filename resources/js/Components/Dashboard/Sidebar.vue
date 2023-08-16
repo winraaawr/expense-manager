@@ -50,7 +50,7 @@
                 </li>
                 <li v-if="$page.props.auth.user.role_id === 1">
                     <a
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mb-2">
                         <span class="ml-3">User Management</span>
                     </a>
                     <ul class="space-y-2">
@@ -67,7 +67,7 @@
                 </li>
                 <li>
                     <a
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mb-2">
                         <span class="ml-3">Expenses Management</span>
                     </a>
                     <ul class="space-y-2">
