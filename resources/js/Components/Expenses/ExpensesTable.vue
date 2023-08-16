@@ -39,7 +39,10 @@
                     <td class="px-6 py-4">{{ formatDate(expense.created_at) }}</td>
                 </tr>
                 <tr v-if="expenses.length < 1" class="">
-                    <th colspan="4" class="italic px-6 py-16 font-medium text-gray-800/50 whitespace-nowrap dark:text-white text-center">
+                    <th v-if="user.role_id == 1" colspan="5" class="italic px-6 py-16 font-medium text-gray-800/50 whitespace-nowrap dark:text-white text-center">
+                        No expense record found.
+                    </th>
+                    <th v-else colspan="4" class="italic px-6 py-16 font-medium text-gray-800/50 whitespace-nowrap dark:text-white text-center">
                         No expense record found.
                     </th>
                 </tr>
@@ -47,7 +50,7 @@
         </table>
     </div>
 
-    <Modal v-if="isShownModalRole" size="lg" @close="closeUpdateExpense">
+    <Modal class="absolute" v-if="isShownModalRole" size="lg" @close="closeUpdateExpense">
         <template #header>
             <div class="flex items-center text-lg">Update Expenses</div>
         </template>

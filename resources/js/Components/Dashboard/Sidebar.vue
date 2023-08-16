@@ -43,8 +43,8 @@
                     </Link>
                 </li>
                 <li>
-                    <Link :href="route('dashboard')" :class="{ 'bg-blue-500 text-white hover:bg-blue-600': $page.url === '/dashboard' }"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <Link :href="route('dashboard')" :class="$page.url === '/dashboard' ? 'bg-blue-500 text-white hover:bg-blue-600': 'text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700'"
+                        class="flex items-center p-2 rounded-lg dark:text-white group">
                         <font-awesome-icon icon="fa-solid fa-chart-pie" class="ml-3" /><span class="ml-3">Dashboard</span>
                     </Link>
                 </li>
@@ -55,12 +55,12 @@
                     </a>
                     <ul class="space-y-2">
 
-                        <li><Link :href="route('roles')" :class="{ 'bg-blue-500 text-white hover:bg-blue-600': $page.url === '/roles' }"
-                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <li><Link :href="route('roles')" :class="$page.url === '/roles' ? 'bg-blue-500 text-white hover:bg-blue-600': 'text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                class="flex items-center p-2 rounded-lg group">
                                 <font-awesome-icon icon="fa-solid fa-user-gear" class="ml-3" /><span class="ml-3">Roles</span>
                             </Link></li>
-                        <li><Link :href="route('users')" :class="{ 'bg-blue-500 text-white hover:bg-blue-600': $page.url === '/users' }"
-                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <li><Link :href="route('users')" :class="$page.url === '/users' ? 'bg-blue-500 text-white hover:bg-blue-600': 'text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                class="flex items-center p-2 rounded-lg group">
                                 <font-awesome-icon icon="fa-solid fa-users" class="ml-3" /><span class="ml-3">Users</span>
                         </Link></li>
                     </ul>
@@ -72,12 +72,13 @@
                     </a>
                     <ul class="space-y-2">
 
-                        <li v-if="$page.props.auth.user.role_id === 1"><Link :href="route('categories')" :class="{ 'bg-blue-500 text-white hover:bg-blue-600': $page.url === '/categories' }"
-                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <li v-if="$page.props.auth.user.role_id === 1">
+                            <Link :href="route('categories')" :class="$page.url === '/categories' ? 'bg-blue-500 text-white hover:bg-blue-600': 'text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                class="flex items-center p-2 rounded-lg group">
                                 <font-awesome-icon icon="fa-solid fa-comment-dollar" class="ml-3" /><span class="ml-3">Expenses Categories</span>
                         </Link></li>
-                        <li><Link :href="route('expenses')" :class="{ 'bg-blue-500 text-white hover:bg-blue-600': $page.url === '/expenses' }"
-                                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <li><Link :href="route('expenses')" :class="$page.url === '/expenses' ? 'bg-blue-500 text-white hover:bg-blue-600': 'text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                class="flex items-center p-2 rounded-lg group">
                                 <font-awesome-icon icon="fa-solid fa-money-check-dollar" class="ml-3" /><span class="ml-3">Expenses</span>
                         </Link></li>
                     </ul>

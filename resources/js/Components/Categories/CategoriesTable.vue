@@ -28,7 +28,7 @@
         </table>
     </div>
 
-    <Modal v-if="isShownModalCategory" size="lg" @close="closeUpdateCategory">
+    <Modal class="absolute" v-if="isShownModalCategory" size="lg" @close="closeUpdateCategory">
         <template #header>
             <div class="flex items-center text-lg">Update Category</div>
         </template>

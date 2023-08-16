@@ -46,7 +46,7 @@
         </table>
     </div>
 
-    <Modal v-if="isShownModalUser" size="lg" @close="closeUpdateUser">
+    <Modal class="absolute" v-if="isShownModalUser" size="lg" @close="closeUpdateUser">
         <template #header>
             <div class="flex items-center text-lg">Update User</div>
         </template>
